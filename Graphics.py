@@ -120,7 +120,7 @@ class Polygon:
                 pygame.polygon (dpos, pygame.color ("white"))
             else:
                 pygame.polygon (dpos, self.clr)
-            pygame.polygon (dpos, pygame.color ("black"), 2)
+            pygame.polygon (dpos, pygame.color ("black"), 1)
             self.drawPoints = None
 
     # returns average depth of points for polygon
@@ -188,7 +188,7 @@ class World:
             p += [Point (Vector.Vector (a.p1.toList () + [20]))]
             p += [Point (Vector.Vector (a.p2.toList () + [20]))]
             p += [Point (Vector.Vector (a.p2.toList () + [0]))]
-            self.objects += [Object (p, [[0, 1, 2, 3], [3, 2, 1, 0]], pygame.colorRGB (255, 0, 0))]
+            self.objects += [Object (p, [[0, 1, 2, 3], [3, 2, 1, 0]], pygame.colorRGB (225, 225, 225))]
 
     # adds a new object
     def newObject (self, ob):
@@ -317,7 +317,6 @@ class World:
         # draw polygons
         for a in toRender:
             a.render (self.camera, pygame)
-##        print "Rendering " + str (len (toRender)) + " polygons out of " + str (totalNum) + "\t" + str (len (toRender) * 100.0 / totalNum) + "%"
 
 
 # merge method for mergeSort ()

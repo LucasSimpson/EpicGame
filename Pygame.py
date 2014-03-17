@@ -1,7 +1,4 @@
-import math
-import os, sys
-import pygame
-import Vector
+import math, pygame, os, random, sys, Vector
 
 # check for font and sound ability
 if not pygame.font: print 'Warning, fonts disabled'
@@ -28,7 +25,7 @@ class Pygame:
             if programLoop != None:
                 programLoop (self.frameCount)
             pygame.display.update ()
-            self.clock.tick (30)
+            self.clock.tick (24)
             self.frameCount += 1
 
     # set the keyboard input
@@ -37,8 +34,12 @@ class Pygame:
             return pygame.key.get_pressed ()
         return pygame.key.get_pressed ()
 
+    # returns the surface object
+    def surface (self):
+        return self.screen
+
     # returns color object
-    def color (self, s = "white"):
+    def color (self, s = 'white'):
         return pygame.color.Color (s)
     def colorRGB (self, r, g, b):
         return pygame.color.Color (r, g, b)
@@ -62,5 +63,60 @@ class Pygame:
     # updates the window
     def update (self):
         pygame.display.update ()
+
+# Sprite class
+class Sprite (pygame.sprite.Sprite):
+    def __init__ (self, x, y, width, height, image, pg):
+        pygame.sprite.Sprite.__init__ (self)
+        self.image = pygame.image.load (image)
+        self.rect = pygame.Rect (x, y, width, height)
+        self.group = pygame.sprite.Group (self)
+        self.surface = pg.surface ()
+
+    # draw the sprite to the surface
+    def draw (self):
+        self.group.draw (self.surface)
+
+# Button class
+class Button:
+    def __init__ (self, x1, y1, x2, y2):
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+        self.held = False
+
+    def clicked (self):
+        pos = pygame.mouse.get_pos ()
+        pressed = pygame.mouse.get_pressed ()
+        if pos [0] >= self.x1 and pos [0] <= self.x2 and pos [1] >= self.y1 and pos [1] <= self.y2 and self.held == True and pressed [0] == False:
+            self.held = False
+            return True
+        self.held = pressed [0]
+        return False
+    
+# screen class, needed cause of bs way i organized this whole code
+class Screen:
+    def __init__ (self, screen):
+        self.screen = screen
+        self.insults = open ('insults.txt', 'r').readlines ()
+        self.numUpgrades = 0
+
+    def setNumUpgrades (self, nu):
+        self.numUpgrades = nu
+
+    def numberOfUpgrades (self):
+        return self.numUpgrades
+
+    def currentScreen (self):
+        return self.screen
+
+    def setScreen (self, screen):
+        self.screen = screen
+
+    def randomInsult (self):
+        return self.insults [random.randint (0, len (self.insults) - 1)]
+
+    
 
 

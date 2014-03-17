@@ -56,7 +56,6 @@ class BulletSystem:
                     a.move ()
                     for b in self.enemies:
                         if b.alive and (a.pos - b.pos).magSquared () <= 100:
-                            print "DIIIIIEEE"
                             a.setAlive (False)
                             b.setAlive (False)
                             break
