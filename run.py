@@ -32,6 +32,7 @@ screen = Pygame.Screen ('MainMenu')
 def loop (frame):
     if screen.currentScreen () == 'MainMenu':
         menuScreen.draw ()
+        screen.drawInsults (pygame)
         if bPlay.clicked ():
             screen.setScreen ('Game')
             levelController.setLevel (1)
@@ -73,6 +74,7 @@ def loop (frame):
                 print screen.randomInsult ()
                 print "GG Loser"
                 print "go back to level 1 where the scrubs like you belong\n\n"
+                screen.addInsult ()
                 player.resetPlayer ()
                 screen.setScreen ('MainMenu')
             else:
@@ -81,6 +83,7 @@ def loop (frame):
                 levelController.setLevel (levelController.currentLevel () + 1)
                 screen.setScreen ('Upgrade')
     elif screen.currentScreen () == 'Upgrade':
+        pygame.textSystem.addText ("Number of upgrades left: " + str (screen.numberOfUpgrades ()), 10, 550)
         upgradeScreen.draw ()
         if bMovementSpeed.clicked ():
             player.movementSpeed *= 1.5

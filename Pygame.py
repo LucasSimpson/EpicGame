@@ -14,6 +14,7 @@ class Pygame:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock ()
         self.frameCount = 0
+        self.textSystem = TextSystem (self.screen)
 
     # takes in the game loop as parameter, runs each frame.
     # clears the screen each frame, updates the window each frame
@@ -24,6 +25,7 @@ class Pygame:
                     sys.exit()
             if programLoop != None:
                 programLoop (self.frameCount)
+            self.textSystem.renderText ()
             pygame.display.update ()
             self.clock.tick (24)
             self.frameCount += 1
@@ -64,6 +66,26 @@ class Pygame:
     def update (self):
         pygame.display.update ()
 
+# Handles drawing text to screen
+class TextSystem:
+    def __init__ (self, screen):
+        self.font = pygame.font.SysFont ('Tahoma', 20)
+        self.screen = screen
+        self.floatingTexts = []
+        self.stack = []
+
+    def addText (self, text, x, y, clr = (195, 195, 195)):
+        self.stack += [[text, x, y, clr]]
+
+    def renderText (self):
+        for a in self.floatingTexts:
+            a.render (self.font, self.screen)
+        for a in self.stack:
+            label = self.font.render (a [0], 1, a [3])
+            self.screen.blit (label, (a [1], a [2]))
+        self.stack = []
+
+
 # Sprite class
 class Sprite (pygame.sprite.Sprite):
     def __init__ (self, x, y, width, height, image, pg):
@@ -101,6 +123,7 @@ class Screen:
         self.screen = screen
         self.insults = open ('insults.txt', 'r').readlines ()
         self.numUpgrades = 0
+        self.insultsToDraw = []
 
     def setNumUpgrades (self, nu):
         self.numUpgrades = nu
@@ -117,6 +140,13 @@ class Screen:
     def randomInsult (self):
         return self.insults [random.randint (0, len (self.insults) - 1)]
 
-    
+    def addInsult (self):
+        self.insultsToDraw += [[self.randomInsult ()[:-1], (230, 230, 230)]]
+
+    def drawInsults (self, pygame):
+        for a in range (len (self.insultsToDraw)):
+            if a == 14:
+                break
+            pygame.textSystem.addText (self.insultsToDraw [a][0], 4, 530 - a * 20, self.insultsToDraw [a][1])
 
 
