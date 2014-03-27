@@ -144,7 +144,7 @@ class Screen:
         return self.insults [random.randint (0, len (self.insults) - 1)]
 
     def addInsult (self):
-        self.insultsToDraw += [self.randomInsult ()[:-1]]
+        self.insultsToDraw = [self.randomInsult ()[:-1]] + self.insultsToDraw
 
     def drawInsults (self, pygame):
         for a in range (len (self.insultsToDraw)):
