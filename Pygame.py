@@ -71,17 +71,17 @@ class TextSystem:
     def __init__ (self, screen):
         self.font = pygame.font.SysFont ('Tahoma', 20)
         self.screen = screen
-        self.floatingTexts = []
         self.stack = []
 
-    def addText (self, text, x, y, clr = (195, 195, 195)):
-        self.stack += [[text, x, y, clr]]
+    def addText (self, text, x, y, clr = (195, 195, 195), size = 20):
+        self.stack += [[text, x, y, clr, size]]
 
     def renderText (self):
-        for a in self.floatingTexts:
-            a.render (self.font, self.screen)
         for a in self.stack:
-            label = self.font.render (a [0], 1, a [3])
+            if a [4] != 20:
+                label = pygame.font.SysFont ('Tahoma', a [4]).render (a [0], 1, a [3])
+            else:
+                label = self.font.render (a [0], 1, a [3])
             self.screen.blit (label, (a [1], a [2]))
         self.stack = []
 
@@ -121,7 +121,10 @@ class Button:
 class Screen:
     def __init__ (self, screen):
         self.screen = screen
-        self.insults = open ('insults.txt', 'r').readlines ()
+        self.insults = []
+        for a in open ('insults.txt', 'r').readlines ():
+            if a != '\n':
+                self.insults += [a]
         self.numUpgrades = 0
         self.insultsToDraw = []
 
@@ -141,12 +144,13 @@ class Screen:
         return self.insults [random.randint (0, len (self.insults) - 1)]
 
     def addInsult (self):
-        self.insultsToDraw += [[self.randomInsult ()[:-1], (230, 230, 230)]]
+        self.insultsToDraw += [self.randomInsult ()[:-1]]
 
     def drawInsults (self, pygame):
         for a in range (len (self.insultsToDraw)):
             if a == 14:
                 break
-            pygame.textSystem.addText (self.insultsToDraw [a][0], 4, 530 - a * 20, self.insultsToDraw [a][1])
+            clr = 129 + a * 9
+            pygame.textSystem.addText (self.insultsToDraw [a], 4, 530 - a * 20, (clr, clr, clr), 12)
 
 

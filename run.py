@@ -29,6 +29,9 @@ bBulletSpeed = Pygame.Button (55, 456, 562, 513)
 # screen controller
 screen = Pygame.Screen ('MainMenu')
 
+for a in range (14):
+   screen.addInsult () 
+
 def loop (frame):
     if screen.currentScreen () == 'MainMenu':
         menuScreen.draw ()
@@ -86,19 +89,19 @@ def loop (frame):
         pygame.textSystem.addText ("Number of upgrades left: " + str (screen.numberOfUpgrades ()), 10, 550)
         upgradeScreen.draw ()
         if bMovementSpeed.clicked ():
-            player.movementSpeed *= 1.5
+            player.movementSpeed *= 1.25
             screen.setNumUpgrades (screen.numberOfUpgrades () - 1)
         elif bTurnSpeed.clicked ():
-            player.rotspeed *= 1.5
+            player.rotspeed *= 1.25
             screen.setNumUpgrades (screen.numberOfUpgrades () - 1)
         elif bTurretSpeed.clicked ():
-            player.turretrotspeed *= 1.5
+            player.turretrotspeed *= 1.25
             screen.setNumUpgrades (screen.numberOfUpgrades () - 1)
         elif bCooldown.clicked ():
-            player.cooldown = int (player.cooldown * 0.6 + 1)
+            player.cooldown = int (player.cooldown * 0.75 + 1)
             screen.setNumUpgrades (screen.numberOfUpgrades () - 1)
         elif bBulletSpeed.clicked ():
-            player.bulletSpeed *= 1.5
+            player.bulletSpeed *= 1.25
             screen.setNumUpgrades (screen.numberOfUpgrades () - 1)
         if screen.numberOfUpgrades () == 0:
             levelController.loadLevel (pygame)

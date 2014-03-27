@@ -139,13 +139,13 @@ class Player:
     def getInput (self, pygame):
         keys = pygame.keyboardInput ()
         if keys [273]:
-            self.setMovement (1)
+            self.setMovement (100)
         elif keys [274]:
-            self.setMovement (-1)
+            self.setMovement (-100)
         if keys [275]:
-            self.setRotation (1)
+            self.setRotation (100)
         elif keys [276]:
-            self.setRotation (-1)
+            self.setRotation (-100)
         if keys [264] or keys [122]:
             self.changeViewTheta (-self.rotspeed / 5)
         elif keys [261] or keys [120]:
