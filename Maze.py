@@ -33,12 +33,12 @@ class BulletSystem:
     # initial values
     def __init__ (self):
         self.enemies = []
-        self.bullets = [Bullet () for a in range (5)]
+        self.bullets = [Bullet () for a in range (20)]
 
     # add an enemy to hit list
     def addEnemy (self, enemy):
         self.enemies += [enemy]
-        self.bullets += [Bullet () for a in range (5)]
+        self.bullets += [Bullet () for a in range (20)]
 
     # adds a new Bullet
     def newBullet (self, pos, vel):

@@ -23,11 +23,16 @@ class LevelController:
     # loads stuff for level to run
     def loadLevel (self, pygame):
         print "\n\n\n\n*** LEVEL " + str (self.level) + " ***"
-        self.player.setUpPlayer (Vector.Vector ([25, 25]), pygame.colorRGB (54, 114, 255), pygame.colorRGB (54, 114, 0))
+        self.player.setUpPlayer (Vector.Vector ([25, 25]), pygame.colorRGB (175, 0, 175), pygame.colorRGB (230, 0, 230)) # dat pink
         self.world.newObject (self.player.graphicsObjects ())
-        self.maze.loadMaze (self.mazeSizes [self.level - 1])
-        self.world.loadMaze (self.maze, pygame)
-        self.AI.setUpRobots (self.numRobots [self.level - 1], pygame)
+        if self.level < len (self.numRobots):
+            self.maze.loadMaze (self.mazeSizes [self.level - 1])
+            self.world.loadMaze (self.maze, pygame)
+            self.AI.setUpRobots (self.numRobots [self.level - 1], pygame)
+        else:
+            self.maze.loadMaze (8)
+            self.world.loadMaze (self.maze, pygame)
+            self.AI.setUpRobots (self.level * 2, pygame)
 
     # resets after level is over
     def reset (self):

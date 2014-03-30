@@ -65,7 +65,7 @@ def loop (frame):
             world.render (pygame)
             timer.tock (2)
 
-            if pygame.keyboardInput () [271]: # numpad enter key to show timer stats
+            if pygame.keyboardInput () [271]: # numpad enter key to show frame stats
                 print timer
         else:
             levelController.reset ()
@@ -114,10 +114,3 @@ def loop (frame):
 pygame.MainLoop (loop)
 
 
-##def loop (frame):
-##    pygame.update ()
-##    keys = pygame.keyboardInput ()
-##    for a in range (len (keys)):
-##        if keys [a] != 0 and a != 300:
-##            print a
-##pygame.MainLoop (loop)
